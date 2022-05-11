@@ -1,29 +1,29 @@
-import { FaPizzaSlice, FaHamburger } from 'react-icons/fa';
-import { GiNoodles, GiChopsticks } from 'react-icons/gi';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { FaPizzaSlice, FaHamburger } from "react-icons/fa";
+import { GiNoodles, GiChopsticks } from "react-icons/gi";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 function Category() {
   return (
     <List>
-      <SLink to={'/cuisine/Italian'}>
+      <SLink to={"/cuisine/Italian"}>
         <FaPizzaSlice />
         <h4>Italian</h4>
       </SLink>
-      <SLink to={'/cuisine/American'}>
+      <SLink to={"/cuisine/American"}>
         <FaHamburger />
         <h4>American</h4>
       </SLink>
-      <SLink to={'/cuisine/Thai'}>
+      <SLink to={"/cuisine/Thai"}>
         <GiNoodles />
         <h4>Thai</h4>
       </SLink>
-      <SLink to={'/cuisine/Japanese'}>
+      <SLink to={"/cuisine/Japanese"}>
         <GiChopsticks />
         <h4>Japanese</h4>
       </SLink>
     </List>
-  )
+  );
 }
 
 const List = styled.div`
@@ -45,7 +45,6 @@ const SLink = styled(NavLink)`
   height: 6rem;
   cursor: pointer;
   transform: scale(0.8);
-
   h4 {
     color: white;
     font-size: 0.8rem;
@@ -63,7 +62,26 @@ const SLink = styled(NavLink)`
       color: white;
     }
   }
-
+  &:hover {
+    background: #e94057;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    margin: 0;
+    height: 6rem;
+    width: 6rem;
+    h4 {
+      display: block;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+    height: 3rem;
+    width: 3rem;
+    h4 {
+      display: none;
+    }
+  }
 `;
 
 export default Category;

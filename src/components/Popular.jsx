@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
+import "@splidejs/splide/dist/css/splide.min.css";
 
 function Popular() {
+  let cardsPerPage;
+  let vw;
   const [popular, setPopular] = useState([]);
+  const [windowSize, setWindowSize] = useState(0);
 
   useEffect(() => {
     getPopular();
+    setWindowSize(
+      Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      )
+    );
   }, []);
 
   const getPopular = async () => {
@@ -28,17 +37,30 @@ function Popular() {
     }
   };
 
+  // set window size used to change cardsPerPage value
+  function resizeWindow() {
+    vw = Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    );
+    setWindowSize(vw);
+  }
+
+  // listen changes in window size and set value of cardsPerPage used in Splide (1 for mobile, 4 for web)
+  window.addEventListener("resize", resizeWindow);
+  cardsPerPage = windowSize <= 1024 ? 1 : 4;
+
   return (
     <div>
       <Wrapper>
         <h3>Popular Picks</h3>
         <Splide
           options={{
-            perPage: 4,
+            perPage: cardsPerPage,
             arrows: false,
             pagination: false,
             drag: "free",
-            gap: "5rem",
+            gap: "3rem",
           }}
         >
           {popular.map((recipe) => {
@@ -46,9 +68,9 @@ function Popular() {
               <SplideSlide key={recipe.id}>
                 <Card>
                   <Link to={"/recipe/" + recipe.id}>
-                  <p>{recipe.title}</p>
-                  <img src={recipe.image} alt={recipe.title} />
-                  <Gradient />
+                    <p>{recipe.title}</p>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <Gradient />
                   </Link>
                 </Card>
               </SplideSlide>
@@ -62,6 +84,11 @@ function Popular() {
 
 const Wrapper = styled.div`
   margin: 4rem 0rem;
+  @media only screen and (max-width: 600px) {
+    h3 {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const Card = styled.div`

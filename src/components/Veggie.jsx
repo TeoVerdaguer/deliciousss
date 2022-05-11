@@ -5,12 +5,19 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
 
 function Veggie() {
+  let cardsPerPage;
+  let vw;
+  // states
   const [veggie, setVeggie] = useState([]);
+  const [ windowSize, setWindowSize ] = useState(0);
 
+  //effects
   useEffect(() => {
     getVeggie();
+    setWindowSize(Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0));
   }, []);
 
+  // API call
   const getVeggie = async () => {
     const check = localStorage.getItem("veggie");
 
@@ -28,17 +35,27 @@ function Veggie() {
     }
   };
 
+    // set window size used to change cardsPerPage value
+    function resizeWindow() {
+      vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      setWindowSize(vw);
+    };
+  
+    // listen changes in window size and set value of cardsPerPage used in Splide (1 for mobile, 4 for web)
+    window.addEventListener('resize', resizeWindow);
+    cardsPerPage = windowSize <= 1024 ? 1 : 4;
+
   return (
     <div>
       <Wrapper>
         <h3>Our Vegetarian Picks</h3>
         <Splide
           options={{
-            perPage: 4,
+            perPage: cardsPerPage,
             arrows: false,
             pagination: false,
             drag: "free",
-            gap: "5rem",
+            gap: "3rem",
           }}
         >
           {veggie.map((recipe) => {
@@ -62,6 +79,11 @@ function Veggie() {
 
 const Wrapper = styled.div`
   margin: 4rem 0rem;
+  @media only screen and (max-width: 600px) {
+    h3 {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const Card = styled.div`

@@ -75,6 +75,24 @@ const DetailWrapper = styled.div`
   ul {
     margin-top: 2rem;
   }
+  @media only screen and (max-width: 1820px) {
+    flex-direction: column;
+    h2 {
+      font-size: 1.4rem;
+    }
+    li {
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+    h3 {
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+    img {
+      margin: 0;
+      width: 100%;
+    }
+  }
 `;
 
 const Button = styled.button`
@@ -84,10 +102,22 @@ const Button = styled.button`
   border: 2px solid black;
   margin-right: 2rem;
   font-weight: 600;
+  @media only screen and (max-width: 1820px) {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    margin: 1rem 0;
+  }
 `;
 
 const Info = styled.div`
   margin-left: 10rem;
+  @media only screen and (max-width: 1820px) {
+    margin: 0rem;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export default Recipe;
